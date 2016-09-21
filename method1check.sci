@@ -81,14 +81,16 @@ endfunction
 function writeInFile(file,N,k,s,emax,erel,x,y,y1,y2,y3)
     fd= mopen(file,'a+');
     
-        mfprintf(fd,"на [%1.2f,%1.2f] при N=%d, k=%1.3f s=%d\n",a,b,N,k,s);
-        mfprintf(fd,"h=%1.15f hh=%1.15f\n",h,h/(2^s));
-        mfprintf(fd,"emax=%1.15f\n",emax);
-        mfprintf(fd,"max y1-y2=%1.15f\n",max(abs(y1-y2)));
+//        mfprintf(fd,"на [%1.2f,%1.2f] при N=%d, k=%1.3f s=%d\n",a,b,N,k,s);
+//        mfprintf(fd,"%1.15f\t%1.15f\t%1.15f\t%1.15f\n",(b-a)/N,emax,);
+//        mfprintf(fd,"h=%1.15f hh=%1.15f\n",h,);
+//        mfprintf(fd,"emax=%1.15f\n",emax);
+//        mfprintf(fd,"max y1-y2=%1.15f\n",max(abs(y1-y2)));
 //        mfprintf(fd,"e1=%1.15f, e2=%1.15f\n",Emax(y,y1),Emax(y,y2));
         p1=Emax(y,y1)/Emax(y,y2);
         p2=(Emax(y,y1)-Emax(y,y2))/(Emax(y,y2)-Emax(y,y3));
-        mfprintf(fd,"p*=%1.15f, p=%1.15f\n",log2(p1),log2(p2) );
+//        mfprintf(fd,"p*=%1.15f, p=%1.15f\n",log2(p1),log2(p2) );
+        mfprintf(fd,"%1.15f\t%1.15f\t%1.15f\t%1.15f\n",(b-a)/N,emax,log2(p1),log2(p2));
 //        for i=1:length(erel)
 ////            mfprintf(fd,"x(%2d)=%1.15f \t y(%2d)=%1.15f \t y1(%2d)=%1.15f y2(%2d)=%1.15f \t erel(%2d)=%1.15f\n",i,x(i),i,y(i),i,y1(i),i,y2,i,erel(i)*100);
 //            mfprintf(fd,"x(%2d)=%1.5f \t y(%2d)=%1.15f \t y1(%2d)=%1.15f y2(%2d)=%1.15f \t y1-y2=%1.15f\n",i,x(i),i,y(i),i,y1(i),i,y2(i),abs(y1(i)-y2(i)));
@@ -119,9 +121,9 @@ function checkMethod1
     nn=[0 3];
     for j=1:length(km)
         k = km(j);
-        N = 800;
+        N = 5;
         leg = "";
-        for i=1:1
+        for i=1:15
 
             N = N*2;
            
@@ -131,12 +133,12 @@ function checkMethod1
             y=fi(x);
             y0=fi(a);
             s=2;
-            y1=method1(a,b,N,y0,k,1);
-            y2=method1(a,b,N,y0,k,2);
-            y3=method1(a,b,N,y0,k,3);
-//            y1=method2(a,b,N,y0,s,k,1);
-//            y2=method2(a,b,N,y0,s,k,2);
-//            y3=method2(a,b,N,y0,s,k,3);
+//            y1=method1(a,b,N,y0,k,0);
+//            y2=method1(a,b,N,y0,k,1);
+//            y3=method1(a,b,N,y0,k,2);
+            y1=method2(a,b,N,y0,s,k,1);
+            y2=method2(a,b,N,y0,s,k,2);
+            y3=method2(a,b,N,y0,s,k,3);
             epr=y2-y1;
             yr1 = y2 + epr;
             epr2=y3-y2;
@@ -157,9 +159,9 @@ function checkMethod1
 //            graphics(x,y1,leg);
 //            leg=leg+"\n";
             s=step;
-//            writeInFile('method1.txt',N,k,s,emax,erel,x,y,y1,y2,y3);
-            printBrif(file,N,k,h,emax);
-            printBrif(file,N,k,h/2,eprmax);
+            writeInFile('method1.txt',N,k,s,emax,erel,x,y,y1,y2,y3);
+//            printBrif(file,N,k,h,emax);
+//            printBrif(file,N,k,h/2,eprmax);
             if Emin == -1 then
                 Emin = emax;
                 Nopt = N;

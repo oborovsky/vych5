@@ -123,7 +123,7 @@ function checkMethod1
         k = km(j);
         N = 5;
         leg = "";
-        for i=1:15
+        for i=1:5
 
             N = N*2;
            
@@ -159,22 +159,22 @@ function checkMethod1
 //            graphics(x,y1,leg);
 //            leg=leg+"\n";
             s=step;
-            writeInFile('method1.txt',N,k,s,emax,erel,x,y,y1,y2,y3);
-//            printBrif(file,N,k,h,emax);
-//            printBrif(file,N,k,h/2,eprmax);
-            if Emin == -1 then
-                Emin = emax;
-                Nopt = N;
-                Kmin = k;
-                Hmin = h;
-            else
-                if Emin > emax then
-                    Emin = emax;
-                    Nopt = N;
-                    Kmin = k;
-                    Hmin = h;
-                end
-            end
+           // writeInFile('method1.txt',N,k,s,emax,erel,x,y,y1,y2,y3);
+            printBrif(file,N,k,h,emax);
+            printBrif(file,N,k,h/2,eprmax);
+           // if Emin == -1 then
+             //   Emin = emax;
+               // Nopt = N;
+               // Kmin = k;
+               // Hmin = h;
+           // else
+             //   if Emin > emax then
+               //     Emin = emax;
+                 //   Nopt = N;
+                //    Kmin = k;
+                //    Hmin = h;
+            //    end
+        //    end
         end
         
     end
